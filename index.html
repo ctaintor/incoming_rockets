@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Incoming Rocket Detection</title>
+    <meta name="description" content="Site to alert you to incoming missiles in Israel">
+    <meta name="author" content="Case Taintor & Ben Maraney">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="script.js" defer></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-5694356-12', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<h1>Incoming Rocket Alerts</h1>
+
+<h2 id="faq-header">Frequently Asked Questions</h2>
+
+<div id="faq">
+    <div class="faq-item">
+        <h3 class="faq-question">Where does this data come from?</h3>
+
+        <p class="faq-answer">The data from this is pulled from Home Front Command. There is no guarantee that this will
+            definitively work, so use this in addition to listening for sirens.</p>
+    </div>
+    <div class="faq-item">
+        <h3 class="faq-question">How do I find my warning area?</h3>
+
+        <p class="faq-answer">You can find your warning area by searching for your city <a
+                href="http://www.oref.org.il/1096-en/Pakar.aspx" target="_blank">here</a>. It will say something like
+            "You
+            belongs to the warning area: Dan 157." So, your warning area is '157' in this case.</p>
+    </div>
+    <div class="faq-item">
+        <h3 class="faq-question">Can you give me some example warning areas?</h3>
+
+        <div class="faq-answer">
+            <ul>
+                <li>Beer Sheva - <a href="#292">292</a></li>
+                <li>Haifa - <a href="#75">75</a></li>
+                <li>Modiin - <a href="#181">181</a></li>
+                <li>Jerusalem - <a href="#194">194</a></li>
+                <li>Tel Aviv-Yafo - <a href="#157">157</a></li>
+            </ul>
+            You can also test what happens when there is an alert by setting the warning area to <a href="#613">613</a>.
+        </div>
+    </div>
+    <div class="faq-item">
+        <h3 class="faq-question">Does this work in my browser?</h3>
+
+        <p class="faq-answer">
+            I have tested this in the latest versions of desktop Chrome and Firefox. It should also work in versions of
+            Internet Explorer newer
+            than IE8. Finally, the sound will not play on many Android devices. <em>You should not use this as an alert
+            system
+            on a mobile phone!</em>
+        </p>
+    </div>
+</div>
+<h2>Enter your warning area</h2>
+
+<form id="regionChooser" name="regionChooser" action="">
+    <label for="region">Warning area: </label>
+    <input id="region" type="number"/>
+    <input type="submit" name="Connect"/>
+</form>
+<audio id="siren" loop preload="auto">
+    <source src="siren.ogg" type="audio/ogg">
+    <source src="siren.mp3" type="audio/mpeg">
+    Your browser does not support the audio element. You will not hear a siren! Use Chrome!
+</audio>
+
+<h2>Current Status</h2>
+
+<p class="note">This will be automatically updated. No need to reload!</p>
+
+<p id="status"></p>
+
+<h2>Status log</h2>
+<textarea id="log" rows="10" cols="80"></textarea>
+</body>
+</html>
