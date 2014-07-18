@@ -96,7 +96,9 @@ Incoming.RocketAlert.prototype = {
     },
     stopSiren: function () {
         this.siren.pause();
-        this.siren.currentTime = 0;
+        if (this.siren.readyState === 'HAVE_ENOUGH_DATA') {
+            this.siren.currentTime = 0;
+        }
     }
 };
 
