@@ -41,6 +41,7 @@ Incoming.RocketAlert = function (regionNumber) {
 };
 
 Incoming.RocketAlert.prototype = {
+    HEARTBEAT_INTERVAL: 10000,
     initialize: function (regionNumber) {
         this.regionNumber = regionNumber;
         this.statusElem = document.getElementById('status');
@@ -52,6 +53,7 @@ Incoming.RocketAlert.prototype = {
         this.websocket.onclose = this.onClose.bind(this);
         this.websocket.onmessage = this.onMessage.bind(this);
         this.websocket.onerror = this.onError.bind(this);
+        setTimeout(this.heartbeat.bind(this), this.HEARTBEAT_INTERVAL);
     },
     close: function () {
         this.websocket.close();
@@ -98,6 +100,13 @@ Incoming.RocketAlert.prototype = {
         this.siren.pause();
         if (this.siren.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
             this.siren.currentTime = 0;
+        }
+    },
+    heartbeat: function () {
+        if (this.websocket.readyState === WebSocket.OPEN) {
+            this.websocket.send('heartbeat');
+            this.writeLog("Sent heartbeat");
+            setTimeout(this.heartbeat.bind(this), this.HEARTBEAT_INTERVAL);
         }
     }
 };
