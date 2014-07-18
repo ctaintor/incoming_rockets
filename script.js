@@ -96,7 +96,7 @@ Incoming.RocketAlert.prototype = {
     },
     stopSiren: function () {
         this.siren.pause();
-        if (this.siren.readyState === 'HAVE_ENOUGH_DATA') {
+        if (this.siren.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
             this.siren.currentTime = 0;
         }
     }
