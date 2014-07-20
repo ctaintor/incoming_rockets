@@ -13,7 +13,7 @@ Incoming = {
         if (Incoming.currentConnection) {
             Incoming.currentConnection.close();
         }
-        Incoming.currentConnection = new Incoming.RocketAlert(region);
+        Incoming.currentConnection = new Incoming.Alert(region);
     },
     onHashChange: function () {
         var regionNumber = window.location.hash.replace('#', '');
@@ -36,11 +36,11 @@ Incoming = {
     }
 };
 
-Incoming.RocketAlert = function (regionNumber) {
+Incoming.Alert = function (regionNumber) {
     this.initialize(regionNumber);
 };
 
-Incoming.RocketAlert.prototype = {
+Incoming.Alert.prototype = {
     HEARTBEAT_INTERVAL: 10000,
     initialize: function (regionNumber) {
         this.regionNumber = regionNumber;
@@ -94,7 +94,8 @@ Incoming.RocketAlert.prototype = {
         this.writeLog("Error with connection...");
     },
     writeLog: function (msg) {
-        this.logElem.value = (new Date()).toLocaleTimeString() + ": " + msg + "\n" + this.logElem.value;
+        var now = new Date();
+        this.logElem.value = now.toLocaleDateString() + " " + now.toLocaleTimeString() + ": " + msg + "\n" + this.logElem.value;
     },
     stopSiren: function () {
         this.siren.pause();
@@ -103,9 +104,10 @@ Incoming.RocketAlert.prototype = {
         }
     },
     heartbeat: function () {
+        var now = new Date();
         if (this.websocket.readyState === WebSocket.OPEN) {
             this.websocket.send('heartbeat');
-            this.writeLog("Sent heartbeat");
+            document.getElementById('lastHearbeat').innerHTML = now.toLocaleDateString() + " " + now.toLocaleTimeString();
             setTimeout(this.heartbeat.bind(this), this.HEARTBEAT_INTERVAL);
         }
     }
